@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import addIcon from "../resources/addIcon.svg";
+import Buttons from "./Buttons";
 function Header(props: { HideHeader: any }) {
   const [isOpen, setIsOpen] = useState(true);
   const screenSize: any = window.screen.availHeight;
@@ -31,24 +31,11 @@ function Header(props: { HideHeader: any }) {
         <p className=" text-slate-400 text-lg">
           Aplicacion web que te ayuda a controlar tus finanzas
         </p>
-        <div className="py-10 flex flex-wrap items-center justify-center gap-8">
-          <p className="text-slate-400 text-xl pb-2 w-full">
+        <div className="py-10">
+          <p className="text-center text-slate-400 text-xl pb-2 w-full">
             Comienza agregando un gasto o un ingreso
           </p>
-          <button
-            className="inline-flex items-center justify-center gap-2 px-4 py-2 border-2 border-red-500 text-slate-100 rounded-lg w-50"
-            onClick={() => hideHeader()}
-          >
-            <img src={addIcon} alt="add icon" />
-            Agregar gasto
-          </button>
-          <button
-            className="inline-flex items-center justify-center gap-2 px-4 py-2 border-2 border-green-500 text-slate-100 rounded-lg w-50"
-            onClick={() => hideHeader()}
-          >
-            <img src={addIcon} alt="add icon" />
-            Agregar ingreso
-          </button>
+          <Buttons hideHeader={() => hideHeader()} />
         </div>
       </motion.div>
     </motion.header>
