@@ -12,6 +12,7 @@ function App() {
       {
         (showHeader) ? <Header HideHeader={() => hideHeader()} /> : ''
       }
+      <h1>Hi</h1>
     </div>
   )
 }
