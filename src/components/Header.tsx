@@ -3,12 +3,14 @@ import { motion } from "framer-motion";
 import addIcon from "../resources/addIcon.svg";
 function Header(props: { HideHeader: any }) {
   const [isOpen, setIsOpen] = useState(true);
+  const screenSize: any = window.screen.availHeight;
   const variants = {
     grouUpAnimation: {
       scale: [0.5, 1],
     },
     fadeToTheTop: {
-      y: [0,-500]
+      y: [0, -screenSize],
+      opacity: [1, 0],
     },
   };
   function hideHeader() {
@@ -18,15 +20,12 @@ function Header(props: { HideHeader: any }) {
 
   return (
     <motion.header
-      className="px-4 py-12 bg-slate-800 text-slate-100 flex flex-col justify-center items-center"
+      className="h-screen px-4 py-12 bg-slate-800 text-slate-100 flex flex-col justify-center items-center"
       animate={isOpen ? "" : "fadeToTheTop"}
       variants={variants}
-      transition={{duration: 1}}
+      transition={{ duration: 1 }}
     >
-      <motion.div
-        className="text-center"
-        animate={variants.grouUpAnimation}
-      >
+      <motion.div className="text-center" animate={variants.grouUpAnimation}>
         <p className="text-slate-400">Bienvenido a</p>
         <h1 className="text-6xl">Finance</h1>
         <p className=" text-slate-400 text-lg">
