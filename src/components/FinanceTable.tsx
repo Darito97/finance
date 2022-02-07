@@ -37,7 +37,7 @@ function FinanceTable(props: {
           ? data.map((itemOfData) => item(itemOfData, itemOfData.title))
           : ""}
       </ul>
-      <h3 className="text-right self-end px-5">Total: ${total}</h3>
+      <h3 className="text-right self-end px-5  text-slate-400">Total: ${total}</h3>
     </section>
   );
 }

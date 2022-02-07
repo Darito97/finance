@@ -1,9 +1,15 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import FinanceTable from "./FinanceTable";
 
 function FinanceSection(props: { data: any }) {
   const data: [] | any[] = props.data;
   const [totalGlobal, setTotalGlobal] = useState(0);
+
+  const appearUpAnimation = {
+    opacity: [0,1],
+    y: [200, 0]
+  }
 
   const calcTotalGlobal = () => {
     let totals = data.map((dataObject) => caclTotal(dataObject));
@@ -23,7 +29,10 @@ function FinanceSection(props: { data: any }) {
 
   return (
     <main className="h-screen py-8 p-4 text-slate-100">
-      <article className="flex flex-wrap justify-center align-start border-2 border-slate-800 rounded-lg py-2">
+      <motion.article
+        className="flex flex-wrap justify-center align-start border-2 border-slate-800 rounded-lg py-2"
+        animate={appearUpAnimation}
+      >
         {data
           ? data.map((dataObject: any) => {
               let total = caclTotal(dataObject);
@@ -39,10 +48,8 @@ function FinanceSection(props: { data: any }) {
               );
             })
           : ""}
-      </article>
-      <h2 className="p-2 text-2xl text-center">
-        Total <br />${totalGlobal}
-      </h2>
+      </motion.article>
+      <motion.h2 className="p-2 text-2xl text-right" animate={appearUpAnimation}>Total: ${totalGlobal}</motion.h2>
     </main>
   );
 }
