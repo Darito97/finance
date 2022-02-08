@@ -55,7 +55,7 @@ function App() {
       {showHeader ? (
         <Header HideHeader={() => hideHeaderAndShowForm()} />
       ) : (
-        <FinanceSection data={data} />
+        <FinanceSection data={data} changeShowForm={() => changeShowForm()} />
       )}
       {showForm ? (
         <Form type={type} action={""} changeShowForm={() => changeShowForm()} />

@@ -2,13 +2,14 @@ function Form(props: { type: string; action: any; changeShowForm: any }) {
   const { type, action, changeShowForm } = props;
 
   function submitForm(e: any) {
-    action(e);
+    e.preventDefault();
+    console.log(e);
   }
   function closeForm(event: any) {
     event.preventDefault();
     changeShowForm();
   }
-  const closeIcon = (
+  const Close_Icon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       height="24px"
@@ -28,7 +29,7 @@ function Form(props: { type: string; action: any; changeShowForm: any }) {
     >
       <div className=" flex flex-col justify-center items-stretch gap-2 p-4 rounded-lg bg-slate-900 h-fit text-slate-100">
         <button className="self-end" onClick={closeForm}>
-          {closeIcon}
+          <Close_Icon />
         </button>
         <label htmlFor="title">Nombre</label>
         <input
