@@ -20,7 +20,7 @@ function Header(props: { HideHeader: any }) {
 
   return (
     <motion.header
-      className="h-screen px-4 py-12 bg-slate-800 text-slate-100 flex flex-col justify-center items-center"
+      className="h-screen w-full px-4 py-12 bg-slate-800 text-slate-100 flex flex-col justify-center items-center"
       animate={isOpen ? "" : "fadeToTheTop"}
       variants={variants}
       transition={{ duration: 1 }}

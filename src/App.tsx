@@ -11,7 +11,7 @@ function App() {
   }
 
   return (
-    <div className="bg-slate-900 h-screen">
+    <div className="bg-slate-900 h-screen flex justify-center">
       {financeData ? (
         <FinanceSection data={data} />
       ) : (
