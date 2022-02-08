@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 function Form(props: { type: string; action: any; changeShowForm: any }) {
   const { type, action, changeShowForm } = props;
 
@@ -5,8 +7,8 @@ function Form(props: { type: string; action: any; changeShowForm: any }) {
     e.preventDefault();
     console.log(e);
   }
-  function closeForm(event: any) {
-    event.preventDefault();
+  function closeForm(e: any) {
+    e.preventDefault();
     changeShowForm();
   }
   const Close_Icon = () => (
@@ -27,7 +29,11 @@ function Form(props: { type: string; action: any; changeShowForm: any }) {
       className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center bg-slate-700/70"
       onSubmit={(e) => submitForm(e)}
     >
-      <div className=" flex flex-col justify-center items-stretch gap-2 p-4 rounded-lg bg-slate-900 h-fit text-slate-100">
+      <motion.div
+        className=" flex flex-col justify-center items-stretch gap-2 p-4 rounded-lg bg-slate-900 h-fit text-slate-100"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 1], y: [-200, 0] }}
+      >
         <button className="self-end" onClick={closeForm}>
           <Close_Icon />
         </button>
@@ -55,7 +61,7 @@ function Form(props: { type: string; action: any; changeShowForm: any }) {
         >
           Agregar
         </button>
-      </div>
+      </motion.div>
     </form>
   );
 }

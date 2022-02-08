@@ -73,7 +73,7 @@ function FinanceSection(props: { data: any; changeShowForm: any }) {
         Total: ${totalGlobal}
       </motion.h2>
       <motion.button
-        className="fixed bottom-4 right-4 p-3 bg-slate-200 rounded-xl hover:border-2 hover:border-slate-100"
+        className="fixed bottom-4 right-4 p-3 bg-slate-200 rounded-xl"
         animate={appearUpAnimation}
         whileHover={{ rotate: 90 }}
         onClick={() => showForm()}
