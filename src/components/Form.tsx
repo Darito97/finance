@@ -1,11 +1,30 @@
+import { useRef } from "react";
 import { motion } from "framer-motion";
 
 function Form(props: { type: string; action: any; changeShowForm: any }) {
   const { type, action, changeShowForm } = props;
+  const inputTitle = useRef<HTMLInputElement | null>(null);
+  const inputValue = useRef<HTMLInputElement | null>(null);
 
   function submitForm(e: any) {
     e.preventDefault();
-    console.log(e);
+    const [title, value] = [inputTitle.current, inputValue.current];
+    if (
+      title !== null &&
+      value !== null &&
+      title.value !== null &&
+      value.value !== null
+    ) {
+      if (title.value === "") {
+        alert("Ingresa un titulo");
+      } else {
+        if (value.value === "") {
+          alert("Ingresa su valor");
+        } else {
+          console.log(title.value, value.value);
+        }
+      }
+    }
   }
   function closeForm(e: any) {
     e.preventDefault();
@@ -34,11 +53,15 @@ function Form(props: { type: string; action: any; changeShowForm: any }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: [0, 1], y: [-200, 0] }}
       >
-        <button className="self-end" onClick={closeForm}>
+        <button
+          className="self-end active:border-1 active:border-slate-100"
+          onClick={closeForm}
+        >
           <Close_Icon />
         </button>
         <label htmlFor="title">Nombre</label>
         <input
+          ref={inputTitle}
           className="py-1 px-2 rounded-md text-slate-900"
           type="text"
           name="title"
@@ -46,6 +69,7 @@ function Form(props: { type: string; action: any; changeShowForm: any }) {
         />
         <label htmlFor="value">Valor</label>
         <input
+          ref={inputValue}
           className="py-1 px-2 rounded-md text-slate-900"
           type="number"
           name="value"
