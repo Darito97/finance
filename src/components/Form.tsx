@@ -1,7 +1,12 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 
-function Form(props: { type: string; action: any; changeShowForm: any }) {
+function Form(props: {
+  type: string;
+  action: any;
+  changeShowForm: any;
+  showNotification: any;
+}) {
   const { type, action, changeShowForm } = props;
   const inputTitle = useRef<HTMLInputElement | null>(null);
   const inputValue = useRef<HTMLInputElement | null>(null);
@@ -16,14 +21,15 @@ function Form(props: { type: string; action: any; changeShowForm: any }) {
       value.value !== null
     ) {
       if (title.value === "") {
-        alert("Ingresa un titulo");
+        props.showNotification("Ingresa un titulo");
       } else {
         if (value.value === "") {
-          alert("Ingresa su valor");
+          props.showNotification("Ingresa el valor");
         } else {
           console.log(title.value, value.value);
         }
       }
+    } else {
     }
   }
   function closeForm(e: any) {

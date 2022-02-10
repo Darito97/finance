@@ -2,6 +2,7 @@ import { useState } from "react";
 import FinanceSection from "./components/FinanceSection";
 import Header from "./components/Header";
 import Form from "./components/Form";
+import Notification from "./components/Notification";
 
 import exampleData from "./data";
 function App() {
@@ -49,7 +50,15 @@ function App() {
       addCost(newCostOrIncome);
     }
   }
-
+  const [showNotification, setShowNotification] = useState(false);
+  const [messageOfNotification, setMessageOfNotification] = useState("");
+  function showNot(message: string) {
+    if (showNotification === false) {
+      setMessageOfNotification(message);
+      setShowNotification(true);
+    }
+    setTimeout(() => setShowNotification(false), 2000);
+  }
   return (
     <div className="bg-slate-900 h-screen flex justify-center">
       {showHeader ? (
@@ -58,10 +67,16 @@ function App() {
         <FinanceSection data={data} changeShowForm={() => changeShowForm()} />
       )}
       {showForm ? (
-        <Form type={type} action={""} changeShowForm={() => changeShowForm()} />
+        <Form
+          type={type}
+          action={""}
+          changeShowForm={() => changeShowForm()}
+          showNotification={(message: string) => showNot(message)}
+        />
       ) : (
         ""
       )}
+      {showNotification ? <Notification message={messageOfNotification} /> : ""}
     </div>
   );
 }
