@@ -72,6 +72,10 @@ function App() {
           action={""}
           changeShowForm={() => changeShowForm()}
           showNotification={(message: string) => showNot(message)}
+          addNewCostOrIncome={(
+            newCostOrIncome: typeOfCostOrIncome,
+            type: string
+          ) => addNewCostOrIncome(newCostOrIncome, type)}
         />
       ) : (
         ""

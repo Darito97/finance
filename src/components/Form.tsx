@@ -3,35 +3,17 @@ import { motion } from "framer-motion";
 
 function Form(props: {
   type: string;
-  action: any;
+  addNewCostOrIncome: any;
   changeShowForm: any;
   showNotification: any;
 }) {
-  const { type, action, changeShowForm } = props;
+  const { type, addNewCostOrIncome, changeShowForm } = props;
   const [inputTitle, setInputTitle] = useState("");
   const [inputTitleError, setInputTitleError] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [inputValueError, setInputValueError] = useState(false);
-
-  function submitForm(e: any) {
-    e.preventDefault();
-    if (inputTitle === "" || inputValue === "") {
-      if (inputTitle === "") {
-        props.showNotification("Ingresa un titulo");
-        setInputTitleError(true);
-      }
-      if (inputValue === "") {
-        props.showNotification("Ingresa el valor");
-        setInputValueError(true);
-      }
-    } else {
-      console.log(inputTitle, inputValue);
-    }
-  }
-  function closeForm(e: any) {
-    e.preventDefault();
-    changeShowForm();
-  }
+  const [typeOfValue, setTypeOfValue] = useState("");
+  const [typeOfValueError, setTypeOfValueError] = useState(false);
   const Close_Icon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -44,15 +26,42 @@ function Form(props: {
       <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
     </svg>
   );
+  function submitForm(e: any) {
+    e.preventDefault();
+    if (inputTitle === "" || inputValue === "" || typeOfValue === "") {
+      if (inputTitle === "") {
+        props.showNotification("Ingresa un titulo");
+        setInputTitleError(true);
+      }
+      if (inputValue === "") {
+        props.showNotification("Ingresa el valor");
+        setInputValueError(true);
+      }
+      if (typeOfValue === "") {
+        setTypeOfValueError(true);
+      }
+    } else {
+      let newCostOrIncome = {
+        title: inputTitle,
+        value: inputValue,
+      };
+      addNewCostOrIncome(newCostOrIncome, typeOfValue);
+    }
+  }
+  function closeForm(e: any) {
+    e.preventDefault();
+    changeShowForm();
+  }
   useEffect(() => {
-    console.log(inputTitle);
     setInputTitleError(false);
   }, [inputTitle]);
 
   useEffect(() => {
-    console.log(inputValue);
     setInputValueError(false);
   }, [inputValue]);
+  useEffect(() => {
+    setTypeOfValueError(false);
+  }, [typeOfValue]);
 
   return (
     <form
@@ -98,6 +107,51 @@ function Form(props: {
         {inputValueError ? (
           <motion.p animate={{ x: [0, 10, 0, 10, 0] }} className="text-red-400">
             * Ingresa un valor en este campo
+          </motion.p>
+        ) : (
+          ""
+        )}
+        <p>¿Es un gasto o ingreso?</p>
+        <div className="flex items-center justify-evenly">
+          <button
+            className={
+              typeOfValue === "cost"
+                ? "py-1 px-2 border-2 border-red-900 rounded-md bg-red-900"
+                : "py-1 px-2 border-2 border-red-900 rounded-md"
+            }
+            onClick={(e) => {
+              e.preventDefault();
+              if (typeOfValue !== "cost") {
+                setTypeOfValue("cost");
+              } else {
+                setTypeOfValue("");
+              }
+            }}
+          >
+            Gasto
+          </button>
+          <button
+            className={
+              typeOfValue === "income"
+                ? "py-1 px-2 border-2 border-green-900 rounded-md bg-green-900"
+                : "py-1 px-2 border-2 border-green-900 rounded-md"
+            }
+            onClick={(e) => {
+              e.preventDefault();
+              if (typeOfValue !== "income") {
+                setTypeOfValue("income");
+              } else {
+                setTypeOfValue("");
+              }
+            }}
+          >
+            Ingreso
+          </button>
+        </div>
+
+        {typeOfValueError ? (
+          <motion.p animate={{ x: [0, 10, 0, 10, 0] }} className="text-red-400">
+            * Ingresa un titulo en este campo
           </motion.p>
         ) : (
           ""
