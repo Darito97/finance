@@ -14,7 +14,7 @@ function Form(props: {
   const [inputValueError, setInputValueError] = useState(false);
   const [typeOfValue, setTypeOfValue] = useState("");
   const [typeOfValueError, setTypeOfValueError] = useState(false);
-  const [close, setClose] = useState(false);
+  const [closing, setClosing] = useState(false);
   const Close_Icon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -46,16 +46,19 @@ function Form(props: {
         title: inputTitle,
         value: Number.parseInt(inputValue),
       };
-      setClose(true);
+      setClosing(true);
+      addNewCostOrIncome(newCostOrIncome, typeOfValue);
       setTimeout(() => {
-        addNewCostOrIncome(newCostOrIncome, typeOfValue);
         changeShowForm();
       }, 1000);
     }
   }
   function closeForm(e: any) {
     e.preventDefault();
-    changeShowForm();
+    setClosing(true);
+    setTimeout(() => {
+      changeShowForm();
+    }, 1000);
   }
   useEffect(() => {
     setInputTitleError(false);
@@ -68,21 +71,30 @@ function Form(props: {
     setTypeOfValueError(false);
   }, [typeOfValue]);
 
+  const variantsFormAnimations = {
+    appear: {
+      x: [window.screenX, 0],
+      y: 0,
+      opacity: [0, 1],
+    },
+    hide: {
+      x: [0, window.screenX],
+      opacity: [1, 0],
+    },
+  };
+
   return (
-    <form
-      className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center bg-slate-700/70"
+    <motion.form
+      className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center bg-slate-700"
       onSubmit={(e) => submitForm(e)}
+      initial={{ opacity: 0 }}
+      animate={closing ? "hide" : "appear"}
+      variants={variantsFormAnimations}
+      transition={{
+        duration: 1,
+      }}
     >
-      <motion.div
-        className=" flex flex-col justify-center items-stretch gap-1 p-4 rounded-lg bg-slate-900 h-fit text-slate-100"
-        initial={{ opacity: 0 }}
-        animate={
-          close
-            ? { opacity: [1, 0], y: [0, -200] }
-            : { opacity: [0, 1], y: [-200, 0] }
-        }
-        transition={{ type: "spring", duration: 1 }}
-      >
+      <motion.div className=" flex flex-col justify-center items-stretch gap-1 p-4 rounded-lg bg-slate-900 h-fit text-slate-100">
         <button
           className="self-end active:border-1 active:border-slate-100"
           onClick={closeForm}
@@ -177,7 +189,7 @@ function Form(props: {
           Agregar
         </button>
       </motion.div>
-    </form>
+    </motion.form>
   );
 }
 
