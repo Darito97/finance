@@ -14,6 +14,7 @@ function Form(props: {
   const [inputValueError, setInputValueError] = useState(false);
   const [typeOfValue, setTypeOfValue] = useState("");
   const [typeOfValueError, setTypeOfValueError] = useState(false);
+  const [close, setClose] = useState(false);
   const Close_Icon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -43,9 +44,13 @@ function Form(props: {
     } else {
       let newCostOrIncome = {
         title: inputTitle,
-        value: inputValue,
+        value: Number.parseInt(inputValue),
       };
-      addNewCostOrIncome(newCostOrIncome, typeOfValue);
+      setClose(true);
+      setTimeout(() => {
+        addNewCostOrIncome(newCostOrIncome, typeOfValue);
+        changeShowForm();
+      }, 1000);
     }
   }
   function closeForm(e: any) {
@@ -71,7 +76,12 @@ function Form(props: {
       <motion.div
         className=" flex flex-col justify-center items-stretch gap-1 p-4 rounded-lg bg-slate-900 h-fit text-slate-100"
         initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 1], y: [-200, 0] }}
+        animate={
+          close
+            ? { opacity: [1, 0], y: [0, -200] }
+            : { opacity: [0, 1], y: [-200, 0] }
+        }
+        transition={{ type: "spring", duration: 1 }}
       >
         <button
           className="self-end active:border-1 active:border-slate-100"

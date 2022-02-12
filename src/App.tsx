@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FinanceSection from "./components/FinanceSection";
 import Header from "./components/Header";
 import Form from "./components/Form";
@@ -7,7 +7,7 @@ import Notification from "./components/Notification";
 import exampleData from "./data";
 function App() {
   const data = exampleData;
-  const [financeData, setFinanceData]: null | any = useState(null);
+  const [financeData, setFinanceData]: any = useState(data);
   const [showHeader, setShowHeader] = useState(true);
   function changeShowHeader() {
     setShowHeader(!showHeader);
@@ -34,20 +34,24 @@ function App() {
   };
   function addCost(newCost: typeOfCostOrIncome) {
     let dataTemp = financeData;
-    console.log(dataTemp, newCost);
+    dataTemp[0].data.push(newCost);
+    return dataTemp;
   }
   function addIncome(newIncome: typeOfCostOrIncome) {
     let dataTemp = financeData;
-    console.log(dataTemp, newIncome);
+    dataTemp[1].data.push(newIncome);
+    return dataTemp;
   }
   function addNewCostOrIncome(
     newCostOrIncome: typeOfCostOrIncome,
     type: string
   ) {
     if (type === "income") {
-      addIncome(newCostOrIncome);
+      let DataWithNewIncome = addIncome(newCostOrIncome);
+      setFinanceData(DataWithNewIncome);
     } else {
-      addCost(newCostOrIncome);
+      let DataWithNewCost = addCost(newCostOrIncome);
+      setFinanceData(DataWithNewCost);
     }
   }
   const [showNotification, setShowNotification] = useState(false);
@@ -59,17 +63,26 @@ function App() {
     }
     setTimeout(() => setShowNotification(false), 2000);
   }
+
+  useEffect(() => {
+    console.log(financeData);
+    return financeData;
+  }, [financeData]);
+
   return (
     <div className="bg-slate-900 h-screen flex justify-center">
-      {showHeader ? (
-        <Header HideHeader={() => hideHeaderAndShowForm()} />
+      {showHeader ? <Header HideHeader={() => hideHeaderAndShowForm()} /> : ""}
+      {financeData && !showHeader ? (
+        <FinanceSection
+          data={financeData}
+          changeShowForm={() => changeShowForm()}
+        />
       ) : (
-        <FinanceSection data={data} changeShowForm={() => changeShowForm()} />
+        ""
       )}
       {showForm ? (
         <Form
           type={type}
-          action={""}
           changeShowForm={() => changeShowForm()}
           showNotification={(message: string) => showNot(message)}
           addNewCostOrIncome={(

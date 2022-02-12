@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import FinanceTable from "./FinanceTable";
 
-function FinanceSection(props: { data: any; changeShowForm: any }) {
-  const data: [] | any[] = props.data;
+function FinanceSection(props: { data: [] | any; changeShowForm: any }) {
   const [totalGlobal, setTotalGlobal] = useState(0);
 
   const Add_Icon = () => (
@@ -25,7 +24,7 @@ function FinanceSection(props: { data: any; changeShowForm: any }) {
   };
 
   const calcTotalGlobal = () => {
-    let totals = data.map((dataObject) => caclTotal(dataObject));
+    let totals = props.data.map((dataObject: any) => caclTotal(dataObject));
     let total = totals[1] - totals[0];
     setTotalGlobal(total);
   };
@@ -38,20 +37,20 @@ function FinanceSection(props: { data: any; changeShowForm: any }) {
   };
   useEffect(() => {
     calcTotalGlobal();
-  }, []);
+  });
 
   const showForm = () => {
     props.changeShowForm();
   };
 
   return (
-    <main className="h-screen py-8 p-4 text-slate-100 max-w-4xl w-full">
+    <main className="min-h-screen py-8 p-4 text-slate-100 max-w-4xl w-full">
       <motion.article
         className="flex flex-wrap justify-center align-start border-2 border-slate-800 rounded-lg py-2"
         animate={appearUpAnimation}
       >
-        {data
-          ? data.map((dataObject: any) => {
+        {props.data
+          ? props.data.map((dataObject: any) => {
               let total = caclTotal(dataObject);
 
               return (
