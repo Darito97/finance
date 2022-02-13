@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-
 function FinanceTable(props: {
   data: undefined | any[];
   title: string;
@@ -9,6 +7,7 @@ function FinanceTable(props: {
   const { data, title, id, total } = props;
 
   const item = (value: any, key: string) => {
+    console.log(key);
     return (
       <li className="flex align-middle justify-between" key={key}>
         <p key={key + "p1"}>{value.title}</p>
@@ -25,7 +24,7 @@ function FinanceTable(props: {
       <h2
         key={id + "h2"}
         className={
-          (title === "Ingresos")
+          title === "Ingresos"
             ? "py-2 border-b-2 text-center border-green-900"
             : "py-2 border-b-2 text-center border-red-900"
         }
@@ -33,11 +32,11 @@ function FinanceTable(props: {
         {title}
       </h2>
       <ul key={id + "ul"} className="py-1 px-5 text-slate-400">
-        {data
-          ? data.map((itemOfData) => item(itemOfData, itemOfData.title))
-          : ""}
+        {data ? data.map((itemOfData) => item(itemOfData, itemOfData.id)) : ""}
       </ul>
-      <h3 className="text-right self-end px-5  text-slate-400">Total: ${total}</h3>
+      <h3 className="text-right self-end px-5  text-slate-400">
+        Total: ${total}
+      </h3>
     </section>
   );
 }

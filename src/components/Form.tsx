@@ -42,7 +42,9 @@ function Form(props: {
         setTypeOfValueError(true);
       }
     } else {
+      let titleWithoutSpaces = inputTitle.replaceAll(" ", "");
       let newCostOrIncome = {
+        id: titleWithoutSpaces + inputValue,
         title: inputTitle,
         value: Number.parseInt(inputValue),
       };
@@ -85,16 +87,16 @@ function Form(props: {
 
   return (
     <motion.form
-      className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center bg-slate-700"
+      className="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center bg-slate-900"
       onSubmit={(e) => submitForm(e)}
       initial={{ opacity: 0 }}
       animate={closing ? "hide" : "appear"}
       variants={variantsFormAnimations}
       transition={{
-        duration: 1,
+        duration: 0.7,
       }}
     >
-      <motion.div className=" flex flex-col justify-center items-stretch gap-1 p-4 rounded-lg bg-slate-900 h-fit text-slate-100">
+      <motion.div className="flex flex-col justify-center items-stretch gap-1 p-4 rounded-lg bg-slate-800 h-fit text-slate-100 shadow-lg">
         <button
           className="self-end active:border-1 active:border-slate-100"
           onClick={closeForm}
@@ -181,7 +183,7 @@ function Form(props: {
         <button
           className={
             type === "income"
-              ? "p-1 bg-green-900 text-slate-100 rounded-md"
+              ? "p-1 bg-green-900 text-slate-100 rounded-md shadow-md"
               : "p-1 bg-red-900 text-slate-100 border-2 border-green-900 rounded-md"
           }
           type="submit"

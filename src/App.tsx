@@ -29,6 +29,7 @@ function App() {
     setType(type);
   }
   type typeOfCostOrIncome = {
+    id: string;
     title: string;
     value: number;
   };
@@ -65,7 +66,6 @@ function App() {
   }
 
   useEffect(() => {
-    console.log(financeData);
     return financeData;
   }, [financeData]);
 
