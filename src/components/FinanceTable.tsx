@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 function FinanceTable(props: {
   data: undefined | any[];
   title: string;
@@ -19,7 +21,16 @@ function FinanceTable(props: {
   );
   const item = (value: any, key: string) => {
     return (
-      <li className="flex align-middle justify-between" key={key}>
+      <motion.li
+        animate={{
+          backgroundColor: ["rgba(100,100,100, 0.25)", "rgba(0,0,0,0)"],
+        }}
+        transition={{
+          duration: 1,
+        }}
+        className="flex align-middle justify-between p-1 rounded-md"
+        key={key}
+      >
         <p key={key + "p1"}>{value.title}</p>
         <div className="flex gap-2">
           <p key={key + "p2"}>{value.value}</p>
@@ -27,7 +38,7 @@ function FinanceTable(props: {
             <Close_Icon />
           </button>
         </div>
-      </li>
+      </motion.li>
     );
   };
 
