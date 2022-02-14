@@ -34,7 +34,7 @@ function FinanceTable(props: {
   return (
     <section
       key={id}
-      className="grid grid-cols-1 grid-rows-3 items-start w-6/12"
+      className="grid grid-rows-[auto_1fr_auto] items-start gap-2 w-6/12"
     >
       <h2
         key={id + "h2"}
@@ -46,12 +46,10 @@ function FinanceTable(props: {
       >
         {title}
       </h2>
-      <ul key={id + "ul"} className="py-1 px-5 text-slate-400">
+      <ul key={id + "ul"} className=" px-5 text-slate-400">
         {data ? data.map((itemOfData) => item(itemOfData, itemOfData.id)) : ""}
       </ul>
-      <h3 className="text-right self-end px-5  text-slate-400">
-        Total: ${total}
-      </h3>
+      <h3 className="text-right px-5  text-slate-400">Total: ${total}</h3>
     </section>
   );
 }
