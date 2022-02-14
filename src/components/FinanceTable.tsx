@@ -5,6 +5,7 @@ function FinanceTable(props: {
   title: string;
   id: string;
   total: number;
+  removeCostOrIncome: any;
 }) {
   const { data, title, id, total } = props;
   const Close_Icon = () => (
@@ -19,6 +20,13 @@ function FinanceTable(props: {
       <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
     </svg>
   );
+  function removeItem(id: string, title: string) {
+    if (title === "Ingresos") {
+      props.removeCostOrIncome(id, "income");
+    } else {
+      props.removeCostOrIncome(id, "cost");
+    }
+  }
   const item = (value: any, key: string) => {
     return (
       <motion.li
@@ -34,7 +42,7 @@ function FinanceTable(props: {
         <p key={key + "p1"}>{value.title}</p>
         <div className="flex gap-2">
           <p key={key + "p2"}>{value.value}</p>
-          <button>
+          <button onClick={() => removeItem(key, title)}>
             <Close_Icon />
           </button>
         </div>

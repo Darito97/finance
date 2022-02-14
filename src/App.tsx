@@ -5,9 +5,12 @@ import Form from "./components/Form";
 import Notification from "./components/Notification";
 
 import exampleData from "./data";
+import { useForceUpdate } from "framer-motion";
 function App() {
   const data = exampleData;
   const [financeData, setFinanceData]: any = useState(data);
+  const [financeIncomeData, setFinanceIncomeData] = useState(data[1].data);
+  const [financeCostData, setFinanceCostData] = useState(data[0].data);
   const [showHeader, setShowHeader] = useState(true);
   function changeShowHeader() {
     setShowHeader(!showHeader);
@@ -24,6 +27,19 @@ function App() {
       changeShowForm();
     }
   }
+  function returnCompleteData() {
+    let data = [
+      {
+        title: "Gastos",
+        data: [...financeCostData],
+      },
+      {
+        title: "Ingresos",
+        data: [...financeIncomeData],
+      },
+    ];
+    return data;
+  }
   const [type, setType] = useState("income");
   function changeTypeOfForm(type: string) {
     setType(type);
@@ -34,13 +50,13 @@ function App() {
     value: number;
   };
   function addCost(newCost: typeOfCostOrIncome) {
-    let dataTemp = financeData;
-    dataTemp[0].data.push(newCost);
+    let dataTemp = financeCostData;
+    dataTemp.push(newCost);
     return dataTemp;
   }
   function addIncome(newIncome: typeOfCostOrIncome) {
-    let dataTemp = financeData;
-    dataTemp[1].data.push(newIncome);
+    let dataTemp = financeIncomeData;
+    dataTemp.push(newIncome);
     return dataTemp;
   }
   function addNewCostOrIncome(
@@ -55,6 +71,15 @@ function App() {
       setFinanceData(DataWithNewCost);
     }
   }
+  function removeCostOrIncome(id: string, type: string) {
+    let data = type === "income" ? financeIncomeData : financeCostData;
+    data = data.filter((item: typeOfCostOrIncome) => item.id !== id);
+    if (type === "income") {
+      setFinanceIncomeData(data);
+    } else {
+      setFinanceCostData(data);
+    }
+  }
   const [showNotification, setShowNotification] = useState(false);
   const [messageOfNotification, setMessageOfNotification] = useState("");
   function showNot(message: string) {
@@ -64,21 +89,18 @@ function App() {
     }
     setTimeout(() => setShowNotification(false), 2000);
   }
-
-  useEffect(() => {
-    return financeData;
-  }, [financeData]);
-
   return (
     <div className="bg-slate-900 h-screen flex justify-center">
-      {showHeader ? <Header HideHeader={() => hideHeaderAndShowForm()} /> : ""}
-      {financeData && !showHeader ? (
-        <FinanceSection
-          data={financeData}
-          changeShowForm={() => changeShowForm()}
-        />
+      {showHeader ? (
+        <Header HideHeader={() => hideHeaderAndShowForm()} />
       ) : (
-        ""
+        <FinanceSection
+          data={returnCompleteData()}
+          changeShowForm={() => changeShowForm()}
+          removeCostOrIncome={(id: string, type: string) =>
+            removeCostOrIncome(id, type)
+          }
+        />
       )}
       {showForm ? (
         <Form

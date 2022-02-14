@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import FinanceTable from "./FinanceTable";
 
-function FinanceSection(props: { data: [] | any; changeShowForm: any }) {
+function FinanceSection(props: {
+  data: [] | any;
+  changeShowForm: any;
+  removeCostOrIncome: any;
+}) {
   const [totalGlobal, setTotalGlobal] = useState(0);
 
   const Add_Icon = () => (
@@ -31,8 +35,10 @@ function FinanceSection(props: { data: [] | any; changeShowForm: any }) {
 
   const caclTotal = (dataObject: any) => {
     let total = 0;
-    const data = dataObject.data;
-    data.map((value: any) => (total = total + value.value));
+    if (dataObject.data !== undefined) {
+      const data = dataObject.data;
+      data.map((value: any) => (total = total + value.value));
+    }
     return total;
   };
   useEffect(() => {
@@ -60,6 +66,7 @@ function FinanceSection(props: { data: [] | any; changeShowForm: any }) {
                   id={dataObject.title}
                   key={dataObject.title}
                   total={total}
+                  removeCostOrIncome={props.removeCostOrIncome}
                 />
               );
             })
