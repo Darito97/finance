@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Buttons from "./Buttons";
 function Header(props: { HideHeader: any }) {
   const [isOpen, setIsOpen] = useState(true);
   const screenSize: any = window.screen.availHeight;
