@@ -35,7 +35,12 @@ function Header(props: { HideHeader: any }) {
           <p className="text-center text-slate-400 text-xl pb-2 w-full">
             Comienza agregando un gasto o un ingreso
           </p>
-          <Buttons hideHeader={() => hideHeader()} />
+          <button
+            onClick={() => hideHeader()}
+            className="p-2 px-4 bg-green-900 rounded-lg text-lg"
+          >
+            ¡Comenzar ahora!
+          </button>
         </div>
       </motion.div>
     </motion.header>
