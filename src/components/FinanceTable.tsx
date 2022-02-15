@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 function FinanceTable(props: {
@@ -8,6 +9,7 @@ function FinanceTable(props: {
   removeCostOrIncome: any;
 }) {
   const { data, title, id, total } = props;
+  const [dataIsClear, setDataIsClear] = useState(false);
   const Close_Icon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +51,13 @@ function FinanceTable(props: {
       </motion.li>
     );
   };
-
+  useEffect(() => {
+    if (data?.length === 0) {
+      setDataIsClear(true);
+    } else {
+      setDataIsClear(false);
+    }
+  });
   return (
     <section
       key={id}
@@ -65,10 +73,18 @@ function FinanceTable(props: {
       >
         {title}
       </h2>
+
       <ul key={id + "ul"} className=" px-5 text-slate-400">
         {data ? data.map((itemOfData) => item(itemOfData, itemOfData.id)) : ""}
       </ul>
-      <h3 className="text-right px-5  text-slate-400">Total: ${total}</h3>
+      {dataIsClear ? (
+        <h3 className="px-5 text-center text-slate-500">No hay datos</h3>
+      ) : (
+        ""
+      )}
+      <h3 className="h-auto text-right px-5  text-slate-400">
+        Total: ${total}
+      </h3>
     </section>
   );
 }
