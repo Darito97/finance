@@ -74,7 +74,7 @@ function FinanceTable(props: {
         {title}
       </h2>
 
-      <ul key={id + "ul"} className=" px-5 text-slate-400">
+      <ul key={id + "ul"} className=" px-5 text-slate-300">
         {data ? data.map((itemOfData) => item(itemOfData, itemOfData.id)) : ""}
       </ul>
       {dataIsClear ? (
