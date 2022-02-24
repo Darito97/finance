@@ -1,12 +1,20 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-
-function Form(props: {
+import { useDispatch, useSelector } from "react-redux";
+import { storeInterface } from "../redux/store";
+import {
+  addCostAction,
+  addIncomeAction,
+  newCostOrIncome,
+} from "../redux/financeDuck";
+interface Props {
   type: string;
   addNewCostOrIncome: any;
   changeShowForm: any;
   showNotification: any;
-}) {
+}
+
+function Form(props: Props) {
   const { type, addNewCostOrIncome, changeShowForm } = props;
   const [inputTitle, setInputTitle] = useState("");
   const [inputTitleError, setInputTitleError] = useState(false);
@@ -15,6 +23,8 @@ function Form(props: {
   const [typeOfValue, setTypeOfValue] = useState("");
   const [typeOfValueError, setTypeOfValueError] = useState(false);
   const [closing, setClosing] = useState(false);
+  const financeState = useSelector((state: storeInterface) => state.finance);
+  const dispatch = useDispatch();
   const Close_Icon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -50,10 +60,21 @@ function Form(props: {
       };
       setClosing(true);
       addNewCostOrIncome(newCostOrIncome, typeOfValue);
+      if (typeOfValue === "cost") {
+        addNewCost(newCostOrIncome);
+      } else {
+        addNewIncome(newCostOrIncome);
+      }
       setTimeout(() => {
         changeShowForm();
       }, 1000);
     }
+  }
+  function addNewCost(newCost: newCostOrIncome) {
+    dispatch(addCostAction(newCost, financeState));
+  }
+  function addNewIncome(newIncome: newCostOrIncome) {
+    dispatch(addIncomeAction(newIncome, financeState));
   }
   function closeForm(e: any) {
     e.preventDefault();
