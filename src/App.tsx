@@ -11,7 +11,6 @@ function App() {
   const [showHeader, setShowHeader] = useState(true);
   const [showNotification, setShowNotification] = useState(false);
   const [messageOfNotification, setMessageOfNotification] = useState("");
-  const [type, setType] = useState("income");
   const [showForm, setShowForm] = useState(false);
   const CostsState = useSelector(
     (state: storeInterface) => state.finance.Costs
