@@ -8,14 +8,12 @@ import {
   newCostOrIncome,
 } from "../redux/financeDuck";
 interface Props {
-  type: string;
-  addNewCostOrIncome: any;
   changeShowForm: any;
   showNotification: any;
 }
 
 function Form(props: Props) {
-  const { type, addNewCostOrIncome, changeShowForm } = props;
+  const { changeShowForm } = props;
   const [inputTitle, setInputTitle] = useState("");
   const [inputTitleError, setInputTitleError] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -59,7 +57,6 @@ function Form(props: Props) {
         value: Number.parseInt(inputValue),
       };
       setClosing(true);
-      addNewCostOrIncome(newCostOrIncome, typeOfValue);
       if (typeOfValue === "cost") {
         addNewCost(newCostOrIncome);
       } else {
@@ -202,11 +199,7 @@ function Form(props: Props) {
           ""
         )}
         <button
-          className={
-            type === "income"
-              ? "p-1 bg-green-900 text-slate-100 rounded-md shadow-md"
-              : "p-1 bg-red-900 text-slate-100 border-2 border-green-900 rounded-md"
-          }
+          className="p-1 bg-green-900 text-slate-100 rounded-md shadow-md"
           type="submit"
         >
           Agregar

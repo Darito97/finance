@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { removeCostAction, removeIncomeAction } from "../redux/financeDuck";
+import { storeInterface } from "../redux/store";
 
 function FinanceTable(props: {
   data: undefined | any[];
   title: string;
   id: string;
   total: number;
-  removeCostOrIncome: any;
 }) {
   const { data, title, id, total } = props;
   const [dataIsClear, setDataIsClear] = useState(false);
+  const dispatch = useDispatch();
+  const financeState = useSelector((state: storeInterface) => state.finance);
   const Close_Icon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -24,9 +28,11 @@ function FinanceTable(props: {
   );
   function removeItem(id: string, title: string) {
     if (title === "Ingresos") {
-      props.removeCostOrIncome(id, "income");
+      //props.removeCostOrIncome(id, "income");
+      dispatch(removeIncomeAction(id, financeState));
     } else {
-      props.removeCostOrIncome(id, "cost");
+      //props.removeCostOrIncome(id, "cost");
+      dispatch(removeCostAction(id, financeState));
     }
   }
   const item = (value: any, key: string) => {

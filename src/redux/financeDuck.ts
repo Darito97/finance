@@ -1,4 +1,3 @@
-import {} from 'redux'
 //constantes
 export interface newCostOrIncome {
   id: string,
@@ -38,13 +37,13 @@ const REMOVE_INCOME = "REMOVE_INCOME"
 export default function financeReducer (state: financeState = initialState, action: Action){
   switch(action.type){
     case ADD_COST:
-      return {...state, Costs: {data: [...action.payload]}}
+      return {...state, Costs: { title: initialState.Costs.title, data: [...action.payload]}}
     case REMOVE_COST:
-      return {...state, Costs: {data: [...action.payload]}}
-      case ADD_INCOME:
-        return {...state, Incomes: {data: [...action.payload]}}
-      case REMOVE_INCOME:
-        return {...state, Incomes: {data: [...action.payload]}}
+      return {...state, Costs: { title: initialState.Costs.title, data: [...action.payload]}}
+    case ADD_INCOME:
+      return {...state, Incomes: { title: initialState.Incomes.title, data: [...action.payload]}}
+    case REMOVE_INCOME:
+        return {...state, Incomes: { title: initialState.Incomes.title, data: [...action.payload]}}
     default: return state
   }
 }
@@ -68,19 +67,19 @@ export const removeCostAction = (idOfCost: string, prevState: financeState) =>{
   }
 }
 export const addIncomeAction = (newIncome: newCostOrIncome, prevState: financeState) =>{
-  const data = prevState.Costs.data
+  const data = prevState.Incomes.data
   data.push(newIncome)
   return {
-    type: ADD_COST,
+    type: ADD_INCOME,
     payload: data
   }
 }
 
 export const removeIncomeAction = (idOfIncome: string, prevState: financeState) =>{
-  let data = prevState.Costs.data
-  data = data.filter(cost => cost.id!==idOfIncome)
+  let data = prevState.Incomes.data
+  data = data.filter(income => income.id!==idOfIncome)
   return {
-    type: REMOVE_COST,
+    type: REMOVE_INCOME,
     payload: data
   }
 }

@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import FinanceTable from "./FinanceTable";
 
-function FinanceSection(props: {
+interface Props {
   data: [] | any;
   changeShowForm: any;
-  removeCostOrIncome: any;
-}) {
-  const [totalGlobal, setTotalGlobal] = useState(0);
+}
 
+function FinanceSection(props: Props) {
+  const [totalGlobal, setTotalGlobal] = useState(0);
   const Add_Icon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +66,6 @@ function FinanceSection(props: {
                   id={dataObject.title}
                   key={dataObject.title}
                   total={total}
-                  removeCostOrIncome={props.removeCostOrIncome}
                 />
               );
             })
